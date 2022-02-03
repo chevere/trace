@@ -1,6 +1,6 @@
 {
-    "name": "chevere/%repoName%",
-    "description": "A chevere %repoName% abstraction.",
+    "name": "chevere/trace",
+    "description": "A chevere trace component.",
     "homepage": "https://chevere.org",
     "type": "library",
     "license": "Apache-2.0",
@@ -12,23 +12,21 @@
         }
     ],
     "require": {
-        "chevere/chevere": "^0.1.x-dev"
+        "chevere/chevere": "^0.1.x-dev",
+        "chevere/var-dump": "^0.1.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^9.4"
     },
     "autoload": {
-        "files": [
-            "src/functions.php"
-        ],
         "psr-4": {
-            "Chevere\\%namespace%\\": "src/"
+            "Chevere\\Trace\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Chevere\\Tests\\%namespace%\\": "tests/"
+            "Chevere\\Tests\\Trace\\": "tests/"
         }
     },
     "config": {
