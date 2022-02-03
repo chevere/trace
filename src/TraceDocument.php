@@ -72,7 +72,7 @@ final class TraceDocument implements TraceDocumentInterface
         foreach (self::HIGHLIGHT_TAGS as $tag => $key) {
             $val = $trValues[$tag];
             $array[$tag] = $this->format->varDumpFormat()
-                ->highlight($key, (string) $val);
+                ->getHighlight($key, (string) $val);
         }
         
         return $array;
