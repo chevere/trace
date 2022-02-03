@@ -18,9 +18,9 @@ use Chevere\VarDump\Interfaces\VarDumperInterface;
 use Stringable;
 
 /**
- * Describes the component in charge of formatting a trace document.
+ * Describes the component in charge of defining a trace document.
  */
-interface TraceFormatterInterface extends ToArrayInterface, Stringable
+interface TraceDocumentInterface extends ToArrayInterface, Stringable
 {
     public const TAG_ENTRY_FILE = '%file%';
 

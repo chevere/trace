@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Chevere\Trace;
 
 use Chevere\Str\Str;
+use Chevere\Trace\Interfaces\TraceDocumentInterface;
 use Chevere\Trace\Interfaces\TraceEntryInterface;
 use Chevere\Trace\Interfaces\TraceFormatInterface;
-use Chevere\Trace\Interfaces\TraceFormatterInterface;
 
-final class TraceFormatter implements TraceFormatterInterface
+final class TraceDocument implements TraceDocumentInterface
 {
     private array $array = [];
 
