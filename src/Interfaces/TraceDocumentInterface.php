@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Trace\Interfaces;
 
 use Chevere\Common\Interfaces\ToArrayInterface;
+use Chevere\VarDump\Interfaces\VarDumpDocumentFormatInterface;
 use Chevere\VarDump\Interfaces\VarDumperInterface;
 use Stringable;
 
@@ -49,7 +50,7 @@ interface TraceDocumentInterface extends ToArrayInterface, Stringable
 
     public function __construct(
         array $trace,
-        TraceFormatInterface $format
+        VarDumpDocumentFormatInterface $format
     );
 
     public function getTrTable(

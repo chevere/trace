@@ -16,7 +16,7 @@ namespace Chevere\Trace;
 use Chevere\Str\Str;
 use Chevere\Trace\Interfaces\TraceDocumentInterface;
 use Chevere\Trace\Interfaces\TraceEntryInterface;
-use Chevere\Trace\Interfaces\TraceFormatInterface;
+use Chevere\VarDump\Interfaces\VarDumpDocumentFormatInterface;
 
 final class TraceDocument implements TraceDocumentInterface
 {
@@ -26,11 +26,11 @@ final class TraceDocument implements TraceDocumentInterface
 
     public function __construct(
         private array $trace,
-        private TraceFormatInterface $format
+        private VarDumpDocumentFormatInterface $format
     ) {
         foreach ($this->trace as $pos => $entry) {
             $this->array[] = strtr(
-                $this->format->getTraceEntryTemplate(),
+                $this->format->getItemTemplate(),
                 $this->getTrTable($pos, new TraceEntry($entry))
             );
         }
