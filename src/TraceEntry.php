@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Chevere\Trace;
 
 use Chevere\Message\Message;
-use Chevere\Str\StrBool;
 use Chevere\Throwable\Exceptions\InvalidArgumentException;
 use Chevere\Trace\Interfaces\TraceEntryInterface;
 use ReflectionMethod;
@@ -112,7 +111,11 @@ final class TraceEntry implements TraceEntryInterface
 
     private function handleMissingClassFile()
     {
-        if ($this->file === '' && $this->class !== '') {
+        if (
+            $this->class !== ''
+            and $this->file === ''
+            and !str_ends_with($this->function, '{closure}')
+        ) {
             /** @var class-string $this->class */
             $reflector = new ReflectionMethod($this->class, $this->function);
             $filename = $reflector->getFileName();
@@ -125,10 +128,7 @@ final class TraceEntry implements TraceEntryInterface
 
     private function handleAnonClass()
     {
-        if (
-            (new StrBool($this->class))
-                ->startsWith('class@anonymous')
-        ) {
+        if (str_starts_with($this->class, 'class@anonymous')) {
             preg_match('#class@anonymous(.*):(\d+)#', $this->class, $matches);
             $this->class = 'class@anonymous';
             $this->file = $matches[1];

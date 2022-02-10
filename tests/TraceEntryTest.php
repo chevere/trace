@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Chevere\Tests\Trace;
 
+use Chevere\Tests\Trace\_resources\ExceptionClosure;
 use Chevere\Trace\TraceEntry;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 final class TraceEntryTest extends TestCase
 {
@@ -67,6 +69,34 @@ final class TraceEntryTest extends TestCase
         }
         $this->assertSame($line, $traceEntry->line());
         $this->assertSame($filename . ':' . $line, $traceEntry->fileLine());
+    }
+
+    public function testClassClosure(): void
+    {
+        try {
+            new ExceptionClosure('test', 123);
+        } catch (Throwable $e) {
+            $entry = $e->getTrace()[0];
+            $this->assertSame([
+                'function' => __NAMESPACE__ . '\_resources\{closure}',
+                'class' => ExceptionClosure::class,
+                'type' => '::',
+            ], $entry);
+            $traceEntry = new TraceEntry($entry);
+            $this->assertSame(0, $traceEntry->line());
+        }
+    }
+
+    public function testClassClosureSynthetic(): void
+    {
+        $entry = [
+            'function' => '{closure}',
+            'class' => __CLASS__,
+            'type' => '::',
+            'args' => [],
+        ];
+        $traceEntry = new TraceEntry($entry);
+        $this->assertSame(0, $traceEntry->line());
     }
 
     public function testAnonClass(): void
