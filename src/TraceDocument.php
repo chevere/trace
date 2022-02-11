@@ -83,13 +83,14 @@ final class TraceDocument implements TraceDocumentInterface
         $return = [];
         $template = '%type%%value%';
         foreach ($entry->args() as $argument) {
+            $isObject = is_object($argument);
             $type = get_debug_type($argument);
             $value = match (true) {
                 is_bool($argument) => $argument ? 'true' : 'false',
                 is_numeric($argument) => strval($argument),
                 is_string($argument) => 'length=' . strlen($argument),
                 is_array($argument) => 'size=' . count($argument),
-                is_object($argument) => get_class($argument) . '#'
+                $isObject => '#'
                     . strval(spl_object_id($argument)),
                 is_resource($argument) => get_resource_id($argument),
                 default => '',

@@ -16,6 +16,7 @@ namespace Chevere\Tests\Trace;
 use Chevere\Trace\Formats\TraceFormatPlain;
 use Chevere\Trace\TraceDocument;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 final class TraceDocumentTest extends TestCase
 {
@@ -53,6 +54,7 @@ final class TraceDocumentTest extends TestCase
 
     public function testGetFunctionWithArguments(): void
     {
+        $object = new stdClass();
         $arguments = [
             0 => true,
             1 => false,
@@ -61,7 +63,8 @@ final class TraceDocumentTest extends TestCase
             4 => 1.1,
             5 => 'cadena',
             6 => [],
-            7 => [0, 1]
+            7 => [0, 1],
+            8 => $object,
         ];
         $debugArguments = [
             0 => 'bool(true)',
@@ -71,7 +74,8 @@ final class TraceDocumentTest extends TestCase
             4 => 'float(1.1)',
             5 => 'string(length=6)',
             6 => 'array(size=0)',
-            7 => 'array(size=2)'
+            7 => 'array(size=2)',
+            8 => 'stdClass(#' . spl_object_id($object) . ')',
         ];
         $trace = [
             [
