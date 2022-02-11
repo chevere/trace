@@ -81,6 +81,7 @@ final class TraceEntryTest extends TestCase
                 'function' => __NAMESPACE__ . '\_resources\{closure}',
                 'class' => ExceptionClosure::class,
                 'type' => '::',
+                'args' => []
             ], $entry);
             $traceEntry = new TraceEntry($entry);
             $this->assertSame(0, $traceEntry->line());
