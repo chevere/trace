@@ -77,11 +77,6 @@ final class TraceEntryTest extends TestCase
             new ExceptionClosure('test', 123);
         } catch (Throwable $e) {
             $entry = $e->getTrace()[0];
-            $this->assertSame([
-                'function' => __NAMESPACE__ . '\_resources\{closure}',
-                'class' => ExceptionClosure::class,
-                'type' => '::',
-            ], $entry);
             $traceEntry = new TraceEntry($entry);
             $this->assertSame(0, $traceEntry->line());
         }

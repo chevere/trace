@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Trace;
 
-use Chevere\Str\Str;
 use Chevere\Trace\Interfaces\TraceDocumentInterface;
 use Chevere\Trace\Interfaces\TraceEntryInterface;
-use Chevere\VarDump\Interfaces\VarDumpDocumentFormatInterface;
+use Chevere\Trace\Interfaces\TraceFormatInterface;
 
 final class TraceDocument implements TraceDocumentInterface
 {
@@ -26,7 +25,7 @@ final class TraceDocument implements TraceDocumentInterface
 
     public function __construct(
         private array $trace,
-        private VarDumpDocumentFormatInterface $format
+        private TraceFormatInterface $format
     ) {
         foreach ($this->trace as $pos => $entry) {
             $this->array[] = strtr(
@@ -51,7 +50,7 @@ final class TraceDocument implements TraceDocumentInterface
         return $this->string;
     }
 
-    public function getTrTable(
+    private function getTrTable(
         int $pos,
         TraceEntryInterface $entry
     ): array {
@@ -78,38 +77,44 @@ final class TraceDocument implements TraceDocumentInterface
         return $array;
     }
 
-    public function getFunctionWithArguments(
+    private function getFunctionWithArguments(
         TraceEntryInterface $entry
     ): string {
-        $return = '';
+        $return = [];
+        $template = '%type%%value%';
         foreach ($entry->args() as $argument) {
-            $return .= gettype($argument) . ' ';
-            $return .= match (true) {
+            $type = get_debug_type($argument);
+            $value = match (true) {
                 is_bool($argument) => $argument ? 'true' : 'false',
-                is_scalar($argument) => strval($argument),
-                is_array($argument) => 'array(' . count($argument) . ')',
+                is_numeric($argument) => strval($argument),
+                is_string($argument) => 'length=' . strlen($argument),
+                is_array($argument) => 'size=' . count($argument),
                 is_object($argument) => get_class($argument) . '#'
                     . strval(spl_object_id($argument)),
                 is_resource($argument) => get_resource_id($argument),
                 default => '',
             };
-            $return .= ', ';
+            $return[] = $type
+                . ($value !== '' ? '(' . $value . ')' : '');
         }
-        $return = (new Str($return))
-            ->withReplaceLast(', ', '')
-            ->__toString();
+        $return = implode(', ', $return);
 
-        return $entry->function() . '(' . trim($return) . ')';
+        return $entry->function()
+            . '(' . trim($return) . ')';
     }
 
     private function wrapStringHr(string $text): string
     {
-        return $this->format->getHr() . "\n" . $text . "\n" .
-            $this->format->getHr();
+        return $this->format->getHr()
+            . $this->format->getWrapNewLine($text)
+            . $this->format->getHr();
     }
 
     private function glueString(array $array)
     {
-        return implode("\n" . $this->format->getHr() . "\n", $array);
+        return implode(
+            $this->format->getWrapNewLine($this->format->getHr()),
+            $array
+        );
     }
 }
