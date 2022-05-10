@@ -15,10 +15,10 @@ namespace Chevere\Trace;
 
 use Chevere\Message\Message;
 use Chevere\Throwable\Exceptions\InvalidArgumentException;
-use Chevere\Trace\Interfaces\TraceEntryInterface;
+use Chevere\Trace\Interfaces\EntryInterface;
 use ReflectionMethod;
 
-final class TraceEntry implements TraceEntryInterface
+final class Entry implements EntryInterface
 {
     private string $file;
 

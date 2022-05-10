@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Trace\Formats;
 
-use Chevere\VarDump\Formats\VarDumpPlainFormat;
-use Chevere\VarDump\Interfaces\VarDumpFormatInterface;
+use Chevere\VarDump\Formats\PlainFormat as VarDumpPlainFormat;
+use Chevere\VarDump\Interfaces\FormatInterface as VarDumpFormatInterface;
 
-final class TraceFormatPlain extends TraceFormat
+final class PlainFormat extends Format
 {
     public function getVarDumpFormat(): VarDumpFormatInterface
     {

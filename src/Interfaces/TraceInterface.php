@@ -20,7 +20,7 @@ use Stringable;
 /**
  * Describes the component in charge of defining a trace document.
  */
-interface TraceDocumentInterface extends ToArrayInterface, Stringable
+interface TraceInterface extends ToArrayInterface, Stringable
 {
     public const TAG_ENTRY_FILE = '%file%';
 
@@ -49,6 +49,6 @@ interface TraceDocumentInterface extends ToArrayInterface, Stringable
 
     public function __construct(
         array $trace,
-        TraceFormatInterface $format
+        FormatInterface $format
     );
 }

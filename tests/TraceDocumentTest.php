@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Tests\Trace;
 
-use Chevere\Trace\Formats\TraceFormatPlain;
-use Chevere\Trace\TraceDocument;
+use Chevere\Trace\Formats\PlainFormat;
+use Chevere\Trace\Trace;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -33,8 +33,8 @@ final class TraceDocumentTest extends TestCase
                 'args' => [],
             ],
         ];
-        $format = new TraceFormatPlain();
-        $document = new TraceDocument($trace, $format);
+        $format = new PlainFormat();
+        $document = new Trace($trace, $format);
         $expect = "#0 $file:$line\n$function()";
         $this->assertSame(
             $document->toArray(),
@@ -85,8 +85,8 @@ final class TraceDocumentTest extends TestCase
                 'args' => $arguments
             ]
         ];
-        $format = new TraceFormatPlain();
-        $document = new TraceDocument($trace, $format);
+        $format = new PlainFormat();
+        $document = new Trace($trace, $format);
         $this->assertSame(
             '#0 '
                 . $format->getNewLine()

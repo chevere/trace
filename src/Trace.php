@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Chevere\Trace;
 
-use Chevere\Trace\Interfaces\TraceDocumentInterface;
-use Chevere\Trace\Interfaces\TraceEntryInterface;
-use Chevere\Trace\Interfaces\TraceFormatInterface;
+use Chevere\Trace\Interfaces\EntryInterface;
+use Chevere\Trace\Interfaces\FormatInterface;
+use Chevere\Trace\Interfaces\TraceInterface;
 
-final class TraceDocument implements TraceDocumentInterface
+final class Trace implements TraceInterface
 {
     private array $array = [];
 
@@ -25,12 +25,12 @@ final class TraceDocument implements TraceDocumentInterface
 
     public function __construct(
         private array $trace,
-        private TraceFormatInterface $format
+        private FormatInterface $format
     ) {
         foreach ($this->trace as $pos => $entry) {
             $this->array[] = strtr(
                 $this->format->getItemTemplate(),
-                $this->getTrTable($pos, new TraceEntry($entry))
+                $this->getTrTable($pos, new Entry($entry))
             );
         }
         if ($this->array !== []) {
@@ -52,7 +52,7 @@ final class TraceDocument implements TraceDocumentInterface
 
     private function getTrTable(
         int $pos,
-        TraceEntryInterface $entry
+        EntryInterface $entry
     ): array {
         $function = $this->getFunctionWithArguments($entry);
         $trValues = [
@@ -73,15 +73,14 @@ final class TraceDocument implements TraceDocumentInterface
             $array[$tag] = $this->format->varDumpFormat()
                 ->getHighlight($key, (string) $val);
         }
-        
+
         return $array;
     }
 
     private function getFunctionWithArguments(
-        TraceEntryInterface $entry
+        EntryInterface $entry
     ): string {
         $return = [];
-        $template = '%type%%value%';
         foreach ($entry->args() as $argument) {
             $isObject = is_object($argument);
             $type = get_debug_type($argument);

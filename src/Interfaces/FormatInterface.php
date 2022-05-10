@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Chevere\Trace\Interfaces;
 
-use Chevere\VarDump\Interfaces\VarDumpFormatInterface;
+use Chevere\VarDump\Interfaces\FormatInterface as VarDumpFormatInterface;
 
 /**
  * Describes the component in charge of defining a trace format.
  */
-interface TraceFormatInterface
+interface FormatInterface
 {
     public function varDumpFormat(): VarDumpFormatInterface;
-    
+
     public function getItemTemplate(): string;
 
     public function getHr(): string;

@@ -18,7 +18,7 @@ use Chevere\Throwable\Exceptions\InvalidArgumentException;
 /**
  * Describes the component in charge of describing a trace entry captured from `debug_backtrace()`.
  */
-interface TraceEntryInterface
+interface EntryInterface
 {
     /**
      * Known key properties
