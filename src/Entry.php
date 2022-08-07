@@ -34,9 +34,8 @@ final class Entry implements EntryInterface
 
     private array $args;
 
-    public function __construct(
-        private array $entry
-    ) {
+    public function __construct(private array $entry)
+    {
         $this->assertEntry();
         $this->processEntry();
         $this->handleAnonClass();
