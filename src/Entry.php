@@ -32,10 +32,14 @@ final class Entry implements EntryInterface
 
     private string $type;
 
+    /**
+     * @var array<int, mixed>
+     */
     private array $args;
 
-    public function __construct(private array $entry)
-    {
+    public function __construct(
+        private array $entry
+    ) {
         $this->assertEntry();
         $this->processEntry();
         $this->handleAnonClass();
@@ -87,7 +91,7 @@ final class Entry implements EntryInterface
     {
         $missing = [];
         foreach (self::MUST_HAVE_KEYS as $key) {
-            if (!array_key_exists($key, $this->entry)) {
+            if (! array_key_exists($key, $this->entry)) {
                 $missing[] = $key;
             }
         }
@@ -101,37 +105,43 @@ final class Entry implements EntryInterface
 
     private function processEntry(): void
     {
+        // @phpstan-ignore-next-line
         $this->line = $this->entry['line'] ?? 0;
+        // @phpstan-ignore-next-line
         $this->args = $this->entry['args'] ?? [];
         foreach (array_diff(self::KEYS, ['line', 'args']) as $propName) {
+            // @phpstan-ignore-next-line
             $this->{$propName} = $this->entry[$propName] ?? '';
         }
     }
 
-    private function handleMissingClassFile()
+    private function handleMissingClassFile(): void
     {
-        if (
+        if (! (
             $this->class !== ''
-            and $this->file === ''
-            and !str_ends_with($this->function, '{closure}')
-        ) {
-            /** @var class-string $this->class */
-            $reflector = new ReflectionMethod($this->class, $this->function);
-            $filename = $reflector->getFileName();
-            if ($filename) {
-                $this->file = $filename;
-                $this->line = $reflector->getStartLine();
-            }
+            && $this->file === ''
+            && ! str_ends_with($this->function, '{closure}')
+        )) {
+            return;
+        }
+        $reflector = new ReflectionMethod($this->class, $this->function);
+        $filename = $reflector->getFileName();
+        if (is_string($filename)) {
+            $this->file = $filename;
+            /** @var int $line */
+            $line = $reflector->getStartLine();
+            $this->line = $line;
         }
     }
 
-    private function handleAnonClass()
+    private function handleAnonClass(): void
     {
-        if (str_starts_with($this->class, 'class@anonymous')) {
-            preg_match('#class@anonymous(.*):(\d+)#', $this->class, $matches);
-            $this->class = 'class@anonymous';
-            $this->file = $matches[1];
-            $this->line = (int) $matches[2];
+        if (! str_starts_with($this->class, 'class@anonymous')) {
+            return;
         }
+        preg_match('#class@anonymous(.*):(\d+)#', $this->class, $matches);
+        $this->class = 'class@anonymous';
+        $this->file = $matches[1];
+        $this->line = (int) $matches[2];
     }
 }

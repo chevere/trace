@@ -19,7 +19,15 @@ use Chevere\Trace\Interfaces\TraceInterface;
 
 final class Trace implements TraceInterface
 {
+    /**
+     * @var array<string>
+     */
     private array $array = [];
+
+    /**
+     * @var array<array<string, string>>
+     */
+    private array $trTable = [];
 
     private string $string = '';
 
@@ -28,9 +36,10 @@ final class Trace implements TraceInterface
         private FormatInterface $format
     ) {
         foreach ($this->trace as $pos => $entry) {
+            $this->trTable[$pos] = $this->getTrTable($pos, new Entry($entry));
             $this->array[] = strtr(
                 $this->format->getItemTemplate(),
-                $this->getTrTable($pos, new Entry($entry))
+                $this->trTable[$pos]
             );
         }
         if ($this->array !== []) {
@@ -40,16 +49,24 @@ final class Trace implements TraceInterface
         }
     }
 
-    public function toArray(): array
-    {
-        return $this->array;
-    }
-
     public function __toString(): string
     {
         return $this->string;
     }
 
+    public function toArray(): array
+    {
+        return $this->array;
+    }
+
+    public function trTable(): array
+    {
+        return $this->trTable;
+    }
+
+    /**
+     * @return array<string, string>
+     */
     private function getTrTable(
         int $pos,
         EntryInterface $entry
@@ -57,11 +74,10 @@ final class Trace implements TraceInterface
         $function = $this->getFunctionWithArguments($entry);
         $trValues = [
             self::TAG_ENTRY_CSS_EVEN_CLASS => ($pos & 1) !== 0
-                ? 'entry--even'
-                : '',
-            self::TAG_ENTRY_POS => $pos,
+                ? self::ENTRY_EVEN : '',
+            self::TAG_ENTRY_POS => strval($pos),
             self::TAG_ENTRY_FILE => $entry->file(),
-            self::TAG_ENTRY_LINE => $entry->line(),
+            self::TAG_ENTRY_LINE => strval($entry->line()),
             self::TAG_ENTRY_FILE_LINE => $entry->fileLine(),
             self::TAG_ENTRY_CLASS => $entry->class(),
             self::TAG_ENTRY_TYPE => $entry->type(),
@@ -71,7 +87,7 @@ final class Trace implements TraceInterface
         foreach (self::HIGHLIGHT_TAGS as $tag => $key) {
             $val = $trValues[$tag];
             $array[$tag] = $this->format->varDumpFormat()
-                ->getHighlight($key, (string) $val);
+                ->getHighlight($key, strval($val));
         }
 
         return $array;
@@ -82,25 +98,24 @@ final class Trace implements TraceInterface
     ): string {
         $return = [];
         foreach ($entry->args() as $argument) {
-            $isObject = is_object($argument);
             $type = get_debug_type($argument);
             $value = match (true) {
                 is_bool($argument) => $argument ? 'true' : 'false',
                 is_numeric($argument) => strval($argument),
                 is_string($argument) => 'length=' . strlen($argument),
                 is_array($argument) => 'size=' . count($argument),
-                $isObject => '#'
+                is_object($argument) => '#'
                     . strval(spl_object_id($argument)),
                 is_resource($argument) => get_resource_id($argument),
                 default => '',
             };
             $return[] = $type
-                . ($value !== '' ? '(' . $value . ')' : '');
+                . ($value !== '' ? "({$value})" : '');
         }
         $return = implode(', ', $return);
 
         return $entry->function()
-            . '(' . trim($return) . ')';
+            . "({$return})";
     }
 
     private function wrapStringHr(string $text): string
@@ -110,7 +125,10 @@ final class Trace implements TraceInterface
             . $this->format->getHr();
     }
 
-    private function glueString(array $array)
+    /**
+     * @param array<string> $array
+     */
+    private function glueString(array $array): string
     {
         return implode(
             $this->format->getWrapNewLine($this->format->getHr()),

@@ -31,6 +31,7 @@ interface EntryInterface
     public const MUST_HAVE_KEYS = ['function'];
 
     /**
+     * @param array<string, mixed> $entry
      * @throws InvalidArgumentException
      */
     public function __construct(array $entry);
@@ -71,6 +72,8 @@ interface EntryInterface
 
     /**
      * Provides access the arguments array.
+     *
+     * @return array<int, mixed>
      */
     public function args(): array;
 }

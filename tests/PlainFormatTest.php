@@ -18,7 +18,7 @@ use Chevere\Trace\Trace;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class TraceDocumentTest extends TestCase
+final class PlainFormatTest extends TestCase
 {
     public function testConstruct(): void
     {
@@ -35,11 +35,11 @@ final class TraceDocumentTest extends TestCase
         ];
         $format = new PlainFormat();
         $document = new Trace($trace, $format);
-        $expect = "#0 $file:$line\n$function()";
+        $expect = "#0 {$file}:{$line}\n{$function}()";
         $this->assertSame(
             $document->toArray(),
             [
-                0 => $expect
+                0 => $expect,
             ]
         );
         $this->assertSame(
@@ -50,6 +50,12 @@ final class TraceDocumentTest extends TestCase
                 . $format->getHr(),
             $document->__toString()
         );
+        $this->assertSame(
+            $format->getNewLine() . $format->getNewLine(),
+            $format->getLineBreak()
+        );
+        $this->assertSame($file, $format->getWrapLink($file));
+        $this->assertSame($file, $format->getWrapHidden($file));
     }
 
     public function testGetFunctionWithArguments(): void
@@ -82,8 +88,8 @@ final class TraceDocumentTest extends TestCase
                 'file' => null,
                 'line' => null,
                 'function' => null,
-                'args' => $arguments
-            ]
+                'args' => $arguments,
+            ],
         ];
         $format = new PlainFormat();
         $document = new Trace($trace, $format);

@@ -19,7 +19,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-final class TraceEntryTest extends TestCase
+final class EntryTest extends TestCase
 {
     public function testConstructInvalidArgument(): void
     {
@@ -29,14 +29,14 @@ final class TraceEntryTest extends TestCase
 
     public function testConstructInvalidTypes(): void
     {
-        $entry = [
+        $array = [
             'file' => null,
             'line' => null,
             'function' => null,
             'class' => null,
             'type' => null,
         ];
-        $traceEntry = new Entry($entry);
+        $entry = new Entry($array);
         $strings = [
             'file',
             'function',
@@ -44,18 +44,19 @@ final class TraceEntryTest extends TestCase
             'type',
         ];
         foreach ($strings as $method) {
-            $this->assertSame('', $traceEntry->{$method}());
+            $this->assertSame('', $entry->{$method}());
         }
-        $this->assertSame([], $traceEntry->args());
-        $this->assertSame(0, $traceEntry->line());
-        $this->assertSame('', $traceEntry->fileLine());
+        $this->assertSame([], $entry->args());
+        $this->assertSame('', $entry->file());
+        $this->assertSame(0, $entry->line());
+        $this->assertSame('', $entry->fileLine());
     }
 
     public function testConstructTypes(): void
     {
         $filename = __FILE__;
         $line = 100;
-        $entry = [
+        $array = [
             'file' => $filename,
             'line' => $line,
             'function' => __FUNCTION__,
@@ -63,12 +64,12 @@ final class TraceEntryTest extends TestCase
             'type' => '->',
             'args' => [1, '2'],
         ];
-        $traceEntry = new Entry($entry);
-        foreach ($entry as $method => $val) {
-            $this->assertSame($val, $traceEntry->{$method}());
+        $entry = new Entry($array);
+        foreach ($array as $method => $val) {
+            $this->assertSame($val, $entry->{$method}());
         }
-        $this->assertSame($line, $traceEntry->line());
-        $this->assertSame($filename . ':' . $line, $traceEntry->fileLine());
+        $this->assertSame($line, $entry->line());
+        $this->assertSame($filename . ':' . $line, $entry->fileLine());
     }
 
     public function testClassClosure(): void
@@ -76,29 +77,29 @@ final class TraceEntryTest extends TestCase
         try {
             new ExceptionClosure('test', 123);
         } catch (Throwable $e) {
-            $entry = $e->getTrace()[0];
-            $traceEntry = new Entry($entry);
-            $this->assertSame(0, $traceEntry->line());
+            $array = $e->getTrace()[0];
+            $entry = new Entry($array);
+            $this->assertSame(0, $entry->line());
         }
     }
 
     public function testClassClosureSynthetic(): void
     {
-        $entry = [
+        $array = [
             'function' => '{closure}',
             'class' => __CLASS__,
             'type' => '::',
             'args' => [],
         ];
-        $traceEntry = new Entry($entry);
-        $this->assertSame(0, $traceEntry->line());
+        $entry = new Entry($array);
+        $this->assertSame(0, $entry->line());
     }
 
     public function testAnonClass(): void
     {
         $line = __LINE__ + 1;
         $fileLine = __FILE__ . ':' . strval($line);
-        $entry = [
+        $array = [
             'file' => null,
             'line' => null,
             'function' => 'method',
@@ -106,13 +107,13 @@ final class TraceEntryTest extends TestCase
             'type' => '->',
             'args' => [],
         ];
-        $traceEntry = new Entry($entry);
+        $entry = new Entry($array);
         $this->assertSame(
             'class@anonymous',
-            $traceEntry->class()
+            $entry->class()
         );
-        $this->assertSame($line, $traceEntry->line());
-        $this->assertSame($fileLine, $traceEntry->fileLine());
+        $this->assertSame($line, $entry->line());
+        $this->assertSame($fileLine, $entry->fileLine());
     }
 
     public function testMissingAnonClassFile(): void
@@ -120,22 +121,22 @@ final class TraceEntryTest extends TestCase
         $line = 100;
         $anonPath = '/path/to/file.php';
         $anonFileLine = $anonPath . ':' . strval($line);
-        $entry = [
+        $array = [
             'file' => null,
             'line' => null,
             'function' => __FUNCTION__,
             'class' => 'class@anonymous' . $anonFileLine . '$b5',
             'type' => '->',
         ];
-        $traceEntry = new Entry($entry);
-        $this->assertSame($line, $traceEntry->line());
-        $this->assertSame($anonFileLine, $traceEntry->fileLine());
+        $entry = new Entry($array);
+        $this->assertSame($line, $entry->line());
+        $this->assertSame($anonFileLine, $entry->fileLine());
     }
 
     public function testMissingClassFile(): void
     {
         $line = __LINE__ - 2;
-        $entry = [
+        $array = [
             'file' => null,
             'line' => null,
             'function' => __FUNCTION__,
@@ -143,21 +144,21 @@ final class TraceEntryTest extends TestCase
             'type' => '->',
             'args' => [1, '2'],
         ];
-        $traceEntry = new Entry($entry);
-        $this->assertSame($line, $traceEntry->line());
-        $this->assertSame(__FILE__ . ':' . $line, $traceEntry->fileLine());
+        $entry = new Entry($array);
+        $this->assertSame($line, $entry->line());
+        $this->assertSame(__FILE__ . ':' . $line, $entry->fileLine());
     }
 
     public function testMissingFileLine(): void
     {
-        $entry = [
+        $array = [
             'file' => 'duh',
             'line' => null,
             'function' => '',
             'class' => '',
             'type' => '->',
         ];
-        $traceEntry = new Entry($entry);
-        $this->assertSame(0, $traceEntry->line());
+        $entry = new Entry($array);
+        $this->assertSame(0, $entry->line());
     }
 }

@@ -19,25 +19,31 @@ use Chevere\VarDump\Interfaces\FormatInterface as VarDumpFormatInterface;
 
 abstract class Format implements FormatInterface
 {
+    private VarDumpFormatInterface $varDumpFormat;
+
     final public function __construct()
     {
-        $this->varDumpFormatter = $this->getVarDumpFormat();
+        $this->varDumpFormat = $this->getVarDumpFormat();
     }
 
     final public function varDumpFormat(): VarDumpFormatInterface
     {
-        return $this->varDumpFormatter;
+        return $this->varDumpFormat;
     }
 
     abstract public function getVarDumpFormat(): VarDumpFormatInterface;
 
+    // @infection-ignore-all
     public function getItemTemplate(): string
     {
-        return '#' . TraceInterface::TAG_ENTRY_POS .
-            ' ' . TraceInterface::TAG_ENTRY_FILE_LINE . "\n" .
-            TraceInterface::TAG_ENTRY_CLASS .
-            TraceInterface::TAG_ENTRY_TYPE .
-            TraceInterface::TAG_ENTRY_FUNCTION;
+        return '#'
+            . TraceInterface::TAG_ENTRY_POS
+            . ' '
+            . TraceInterface::TAG_ENTRY_FILE_LINE
+            . "\n"
+            . TraceInterface::TAG_ENTRY_CLASS
+            . TraceInterface::TAG_ENTRY_TYPE
+            . TraceInterface::TAG_ENTRY_FUNCTION;
     }
 
     public function getHr(): string
@@ -59,8 +65,7 @@ abstract class Format implements FormatInterface
 
     final public function getLineBreak(): string
     {
-        return $this->getNewLine()
-            . $this->getNewLine();
+        return $this->getNewLine() . $this->getNewLine();
     }
 
     public function getWrapLink(string $text): string

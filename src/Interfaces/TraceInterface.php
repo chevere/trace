@@ -38,6 +38,8 @@ interface TraceInterface extends ToArrayInterface, Stringable
 
     public const TAG_ENTRY_POS = '%pos%';
 
+    public const ENTRY_EVEN = 'entry--even';
+
     public const HIGHLIGHT_TAGS = [
         self::TAG_ENTRY_FILE => VarDumperInterface::FILE,
         self::TAG_ENTRY_LINE => VarDumperInterface::FILE,
@@ -47,8 +49,16 @@ interface TraceInterface extends ToArrayInterface, Stringable
         self::TAG_ENTRY_FUNCTION => VarDumperInterface::FUNCTION,
     ];
 
+    /**
+     * @param array<array<string, mixed>> $trace
+     */
     public function __construct(
         array $trace,
         FormatInterface $format
     );
+
+    /**
+     * @return array<array<string, string>>
+     */
+    public function trTable(): array;
 }
