@@ -60,5 +60,5 @@ interface TraceInterface extends ToArrayInterface, Stringable
     /**
      * @return array<array<string, string>>
      */
-    public function trTable(): array;
+    public function table(): array;
 }

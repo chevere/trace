@@ -55,11 +55,11 @@ final class TraceTest extends TestCase
         $trace = new Trace($debugBacktrace, new PlainFormat());
         $this->assertSame(
             '',
-            $trace->trTable()[0][TraceInterface::TAG_ENTRY_CSS_EVEN_CLASS]
+            $trace->table()[0][TraceInterface::TAG_ENTRY_CSS_EVEN_CLASS]
         );
         $this->assertSame(
             TraceInterface::ENTRY_EVEN,
-            $trace->trTable()[1][TraceInterface::TAG_ENTRY_CSS_EVEN_CLASS]
+            $trace->table()[1][TraceInterface::TAG_ENTRY_CSS_EVEN_CLASS]
         );
     }
 

@@ -27,7 +27,7 @@ final class Trace implements TraceInterface
     /**
      * @var array<array<string, string>>
      */
-    private array $trTable = [];
+    private array $table = [];
 
     private string $string = '';
 
@@ -36,10 +36,10 @@ final class Trace implements TraceInterface
         private FormatInterface $format
     ) {
         foreach ($this->trace as $pos => $entry) {
-            $this->trTable[$pos] = $this->getTrTable($pos, new Entry($entry));
+            $this->table[$pos] = $this->getTable($pos, new Entry($entry));
             $this->array[] = strtr(
                 $this->format->getItemTemplate(),
-                $this->trTable[$pos]
+                $this->table[$pos]
             );
         }
         if ($this->array !== []) {
@@ -59,15 +59,15 @@ final class Trace implements TraceInterface
         return $this->array;
     }
 
-    public function trTable(): array
+    public function table(): array
     {
-        return $this->trTable;
+        return $this->table;
     }
 
     /**
      * @return array<string, string>
      */
-    private function getTrTable(
+    private function getTable(
         int $pos,
         EntryInterface $entry
     ): array {
