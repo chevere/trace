@@ -8,7 +8,7 @@
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/trace?style=flat-square)
 [![Apache-2.0](https://img.shields.io/github/license/chevere/trace?style=flat-square)](LICENSE)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Ftrace%2F0.6)](https://dashboard.stryker-mutator.io/reports/github.com/chevere/trace/0.6)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Ftrace%2F0.7)](https://dashboard.stryker-mutator.io/reports/github.com/chevere/trace/0.7)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chevere_trace&metric=alert_status)](https://sonarcloud.io/dashboard?id=chevere_trace)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_trace&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chevere_trace)

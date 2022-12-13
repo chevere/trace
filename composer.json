@@ -12,12 +12,12 @@
         }
     ],
     "require": {
-        "chevere/chevere": "^1.1.x-dev",
-        "chevere/var-dump": "^0.6"
+        "chevere/chevere": "^2.0",
+        "chevere/var-dump": "^0.7"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^1.6",
+        "phpstan/phpstan": "^1.9",
         "symplify/easy-coding-standard": "^11.1"
     },
     "autoload": {
