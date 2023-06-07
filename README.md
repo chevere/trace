@@ -27,7 +27,7 @@ Documentation is available at [chevere.org](https://chevere.org/packages/trace).
 
 ## License
 
-Copyright 2022 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
+Copyright 2023 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
 
 Chevere is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
 
