@@ -8,7 +8,7 @@ jobs:
         os: [ubuntu-latest]
         php: ["8.0", "8.1", "8.2"]
     env:
-      tools: composer, phpstan
+      tools: composer, phpstan, infection
       ini-values: default_charset='UTF-8'
       key: cache-1670860310383
     name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
