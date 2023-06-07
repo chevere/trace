@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Tests\Trace;
+namespace Chevere\Tests;
 
-use Chevere\Tests\Trace\_resources\ExceptionClosure;
+use Chevere\Tests\_resources\ExceptionClosure;
 use Chevere\Trace\Entry;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

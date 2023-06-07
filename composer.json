@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Chevere\\Tests\\Trace\\": "tests/"
+            "Chevere\\Tests\\": "tests/"
         }
     },
     "config": {

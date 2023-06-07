@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Tests\Trace;
+namespace Chevere\Tests;
 
 use Chevere\Trace\Formats\PlainFormat;
 use Chevere\Trace\Trace;

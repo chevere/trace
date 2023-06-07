@@ -26,7 +26,7 @@ final class TraceTest extends TestCase
     {
         $file = __FILE__;
         $line = 1;
-        $class = 'Chevere\Tests\TraceTest';
+        $class = 'Chevere\TestsTest';
         $type = '->';
         $function = 'testPlainFormat';
         $resource = fopen(__FILE__, 'r');
@@ -67,7 +67,7 @@ final class TraceTest extends TestCase
     {
         $file = __FILE__;
         $line = 1;
-        $class = 'Chevere\Tests\TraceTest';
+        $class = 'Chevere\TestsTest';
         $type = '->';
         $function = 'testPlainFormat';
         $resource = fopen(__FILE__, 'r');
