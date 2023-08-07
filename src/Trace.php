@@ -54,6 +54,9 @@ final class Trace implements TraceInterface
         return $this->string;
     }
 
+    /**
+     * @return array<string>
+     */
     public function toArray(): array
     {
         return $this->array;

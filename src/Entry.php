@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Trace;
 
-use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\InvalidArgumentException;
 use Chevere\Trace\Interfaces\EntryInterface;
 use ReflectionMethod;
+use function Chevere\Message\message;
 
 final class Entry implements EntryInterface
 {
