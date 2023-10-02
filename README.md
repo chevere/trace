@@ -17,7 +17,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chevere_trace&metric=coverage)](https://sonarcloud.io/dashboard?id=chevere_trace)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_trace&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_trace)
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/trace/badge)](https://www.codefactor.io/repository/github/chevere/trace)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b956754f8ff04aaa9ca24a6e4cc21661)](https://www.codacy.com/gh/chevere/trace/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b956754f8ff04aaa9ca24a6e4cc21661)](https://app.codacy.com/gh/chevere/trace/dashboard)
 
 ![Router](.github/banner/trace-logo.svg)
 
