@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Trace\Interfaces;
 
-use Chevere\Throwable\Exceptions\InvalidArgumentException;
-
 /**
  * Describes the component in charge of describing a trace entry captured from `debug_backtrace()`.
  */
@@ -32,7 +30,6 @@ interface EntryInterface
 
     /**
      * @param array<string, mixed> $entry
-     * @throws InvalidArgumentException
      */
     public function __construct(array $entry);
 
