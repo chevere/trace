@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "chevere/chevere": "^4.0.x-dev",
-        "chevere/var-dump": "^0.10.x-dev"
+        "chevere/var-dump": "^0.10.x-dev",
+        "chevere/parameter": "^1.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Chevere\Trace\Interfaces;
 
-use Chevere\Common\Interfaces\ToArrayInterface;
 use Chevere\VarDump\Interfaces\VarDumperInterface;
 use Stringable;
 
 /**
  * Describes the component in charge of defining a trace document.
  */
-interface TraceInterface extends ToArrayInterface, Stringable
+interface TraceInterface extends Stringable
 {
     public const TAG_ENTRY_FILE = '%file%';
 
@@ -61,4 +60,9 @@ interface TraceInterface extends ToArrayInterface, Stringable
      * @return array<array<string, string>>
      */
     public function table(): array;
+
+    /**
+     * @return array<string>
+     */
+    public function toArray(): array;
 }
