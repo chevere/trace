@@ -1,6 +1,6 @@
 {
     "name": "chevere/trace",
-    "description": "A chevere trace component.",
+    "description": "Tooling for handling debug_backtrace items",
     "homepage": "https://chevere.org",
     "type": "library",
     "license": "Apache-2.0",
