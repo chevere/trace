@@ -18,8 +18,6 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_trace&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_trace)
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/trace/badge)](https://www.codefactor.io/repository/github/chevere/trace)
 
-![Trace](.github/banner/trace-logo.svg)
-
 ## Summary
 
 Tooling for handling [debug_backtrace](https://www.php.net/manual/en/function.debug-backtrace.php) items.
