@@ -86,19 +86,19 @@ final class TraceTest extends TestCase
         ];
         $format = new HtmlFormat();
         $trace = new Trace($debugBacktrace, $format);
-        $fileLine = $format->varDumpFormat()->getHighlight(
+        $fileLine = $format->varDumpFormat()->highlight(
             TraceInterface::HIGHLIGHT_TAGS[TraceInterface::TAG_ENTRY_FILE],
             "{$file}:{$line}"
         );
-        $class = $format->varDumpFormat()->getHighlight(
+        $class = $format->varDumpFormat()->highlight(
             TraceInterface::HIGHLIGHT_TAGS[TraceInterface::TAG_ENTRY_CLASS],
             $class
         );
-        $type = $format->varDumpFormat()->getHighlight(
+        $type = $format->varDumpFormat()->highlight(
             TraceInterface::HIGHLIGHT_TAGS[TraceInterface::TAG_ENTRY_TYPE],
             $type
         );
-        $functionArgs = $format->varDumpFormat()->getHighlight(
+        $functionArgs = $format->varDumpFormat()->highlight(
             TraceInterface::HIGHLIGHT_TAGS[TraceInterface::TAG_ENTRY_FUNCTION],
             <<<STRING
             {$function}(bool(true), int(123), string(length=6), array(size=0), stdClass(#{$stdClassId}), resource (stream)({$resourceId}))

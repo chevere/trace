@@ -87,7 +87,7 @@ final class Trace implements TraceInterface
         foreach (self::HIGHLIGHT_TAGS as $tag => $key) {
             $val = $trValues[$tag];
             $array[$tag] = $this->format->varDumpFormat()
-                ->getHighlight($key, strval($val));
+                ->highlight($key, strval($val));
         }
 
         return $array;
