@@ -1,11 +1,6 @@
 # Trace
 
-> 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
-
-![Chevere](chevere.svg)
-
-[![Build](https://img.shields.io/github/actions/workflow/status/chevere/trace/test.yml?branch=2.0&style=flat-square)](https://github.com/chevere/trace/actions)
-![Code size](https://img.shields.io/github/languages/code-size/chevere/trace?style=flat-square)
+![Chevere](chevere.svg)![Code size](https://img.shields.io/github/languages/code-size/chevere/trace?style=flat-square)
 [![Apache-2.0](https://img.shields.io/github/license/chevere/trace?style=flat-square)](LICENSE)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Ftrace%2F2.0)](https://dashboard.stryker-mutator.io/reports/github.com/chevere/trace/2.0)
