@@ -119,11 +119,9 @@ final class Entry implements EntryInterface
 
     private function handleMissingClassFile(): void
     {
-        if (! (
-            $this->class !== ''
-            && $this->file === ''
-            && ! str_ends_with($this->function, '{closure}')
-        )) {
+        $isClosure = str_ends_with($this->function, '{closure}')
+            || str_starts_with($this->function, '{closure:');
+        if ($this->class === '' || $this->file !== '' || $isClosure) {
             return;
         }
         $reflector = new ReflectionMethod($this->class, $this->function);
