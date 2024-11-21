@@ -143,7 +143,7 @@ final class Entry implements EntryInterface
         }
         preg_match('#class@anonymous(.*):(\d+)#', $this->class, $matches);
         $this->class = 'class@anonymous';
-        $this->file = $matches[1];
-        $this->line = (int) $matches[2];
+        $this->file = $matches[1]; // @phpstan-ignore-line
+        $this->line = (int) $matches[2]; // @phpstan-ignore-line
     }
 }
