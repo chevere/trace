@@ -16,7 +16,6 @@ namespace Chevere\Trace;
 use Chevere\Trace\Interfaces\EntryInterface;
 use InvalidArgumentException;
 use ReflectionMethod;
-use function Chevere\Message\message;
 
 final class Entry implements EntryInterface
 {
@@ -97,9 +96,9 @@ final class Entry implements EntryInterface
         }
         if ($missing !== []) {
             throw new InvalidArgumentException(
-                (string) message(
-                    'Missing key(s) `%keyNames%`',
-                    keyNames: implode(', ', $missing)
+                sprintf(
+                    'Missing key(s) `%s`',
+                    implode(', ', $missing)
                 )
             );
         }
